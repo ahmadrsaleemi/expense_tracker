@@ -10,7 +10,8 @@ RUN apt-get update && \
         pkg-config && \
     rm -rf /var/lib/apt/lists/*
 
-RUN pip install --no-cache-dir -r ./requirements.txt
+
+RUN pip install --no-cache-dir Flask==3.0.0 pytesseract Pillow gunicorn;
 
 EXPOSE 5000
 
