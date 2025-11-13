@@ -1,0 +1,8 @@
+FROM python:3.11-slim-bookworm
+WORKDIR /app
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    tesseract-ocr tesseract-ocr-swe libtesseract-dev libleptonica-dev pkg-config && \
+    pip install pika pytesseract Pillow opencv-python-headless numpy && \
+    rm -rf /var/lib/apt/lists/*
+COPY app/workers/ocr_worker.py .
+CMD ["python", "ocr_worker.py"] 

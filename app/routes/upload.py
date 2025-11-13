@@ -1,6 +1,7 @@
+import os
 from flask import Blueprint, request, jsonify
 
-from app.controllers.upload_controller import save_file
+from app.controllers.upload_controller import save_file, send_to_queue
 
 upload_bp = Blueprint("upload", __name__)
 
@@ -13,6 +14,11 @@ def file_upload():
     file = request.files["file"]
 
     file_path, error = save_file(file)
+
+    try:
+        send_to_queue(os.path.basename(file_path))
+    except Exception as e:
+        return jsonify({"error": f"Failed to queue task: {str(e)}"}), 500
 
     if error:
         return jsonify({"error": error}), 400

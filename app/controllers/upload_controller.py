@@ -1,4 +1,5 @@
 import os
+import pika, json
 
 from werkzeug.utils import secure_filename
 
@@ -21,3 +22,12 @@ def save_file(file):
     file_path = os.path.join(upload_folder, filename)
     file.save(file_path)
     return file_path, None
+
+
+def send_to_queue(filename):
+    connection = pika.BlockingConnection(pika.ConnectionParameters(host="rabbitmq"))
+    channel = connection.channel()
+    channel.queue_declare(queue="process_ocr")
+    message = json.dumps({"filename": filename})
+    channel.basic_publish(exchange='', routing_key='process_ocr', body=message)
+    connection.close()

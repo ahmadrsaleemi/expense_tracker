@@ -1,0 +1,53 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: expense_tracker_postgres
+    restart: always
+    environment:
+      POSTGRES_DB: expense_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      ports:
+        - "5432:5432"
+      volumes:
+        - pgdata:/var/lib/postgresql/data
+
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: expense_tracker_backend
+    environment:
+      DATABASE_URL: postgresql://postgres:postgres@postgres:5432/expense_db
+    ports:
+      - "5000:5000"
+    volumes:
+      - .:/app
+      - ./app/static/assets:/app/app/static/assets
+    depends_on:
+      - rabbitmq
+      - postgres
+    restart: always
+
+  ocr_worker:
+    build:
+      context: .
+      dockerfile: Dockerfile.worker
+    container_name: ocr_worker
+    command: python app/workers/ocr_worker.py
+    depends_on:
+      - rabbitmq
+    volumes:
+      - .:/app
+      - ./app/static/assets:/app/app/static/assets
+    restart: always
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+
+volumes:
+  pgdata:
