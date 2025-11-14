@@ -1,2 +1,2 @@
-app/static/assets/
-__pycache__
+backend/app/static/assets/
+backend/__pycache__
