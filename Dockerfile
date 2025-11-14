@@ -10,8 +10,20 @@ RUN apt-get update && \
         pkg-config && \
     rm -rf /var/lib/apt/lists/*
 
-RUN pip install --no-cache-dir Flask==3.0.0 pytesseract Pillow gunicorn python-dotenv pika
-RUN pip install Flask SQLAlchemy Flask-Migrate psycopg2-binary
+# RUN pip install --no-cache-dir Flask==3.0.0 pytesseract Pillow gunicorn python-dotenv pika
+# RUN pip install Flask SQLAlchemy Flask-Migrate psycopg2-binary Flask-JWT-Extended
+
+RUN pip install --no-cache-dir \
+    Flask==3.0.0 \
+    SQLAlchemy \
+    Flask-Migrate \
+    psycopg2-binary \
+    Flask-JWT-Extended \
+    pytesseract \
+    Pillow \
+    gunicorn \
+    python-dotenv \
+    pika
 
 COPY . .
 

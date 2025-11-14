@@ -1,7 +1,6 @@
 import os 
 from flask import Flask
-from app.extensions import db, migrate
-
+from app.extensions import db, migrate, jwt
 from .routes import register_routes
 
 def create_app():
@@ -16,6 +15,7 @@ def create_app():
 
     db.init_app(app)
     migrate.init_app(app, db)
+    jwt.init_app(app)
 
     from app import models
 
