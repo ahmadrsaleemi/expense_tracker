@@ -26,3 +26,15 @@ class UserService:
         db.session.commit()
 
         return user, None
+    
+    @staticmethod
+    def get_by_email(email):
+        from app import db
+        if not email:
+            return None
+        
+        user_exist = User.query.filter(
+            (User.email == email)
+        ).first()
+
+        return user_exist
