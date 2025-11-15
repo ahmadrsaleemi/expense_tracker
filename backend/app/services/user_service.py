@@ -1,4 +1,4 @@
-from app.models.user import User
+from app.models.users import Users
 
 from werkzeug.security import generate_password_hash, check_password_hash
 
@@ -6,8 +6,8 @@ class UserService:
     @staticmethod
     def create_user(username, email, password, fullname):
         from app import db
-        user_exist = User.query.filter(
-            (User.username == username) | (User.email == email)
+        user_exist = Users.query.filter(
+            (Users.username == username) | (Users.email == email)
         ).first()
 
         if(user_exist):
@@ -15,7 +15,7 @@ class UserService:
         
         hashed_password = generate_password_hash(password)
 
-        user = User(
+        user = Users(
             username = username,
             email = email,
             fullname = fullname,
@@ -33,8 +33,8 @@ class UserService:
         if not email:
             return None
         
-        user_exist = User.query.filter(
-            (User.email == email)
+        user_exist = Users.query.filter(
+            (Users.email == email)
         ).first()
 
         return user_exist

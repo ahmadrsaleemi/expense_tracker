@@ -1,2 +1,3 @@
 backend/app/static/assets/
 backend/__pycache__
+backend/app/models/__pycache__
