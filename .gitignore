@@ -1,3 +1,5 @@
 backend/app/static/assets/
 backend/__pycache__
 backend/app/models/__pycache__
+frontend/tracker/node_modules/
+frontend/tracker/

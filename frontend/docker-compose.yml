@@ -1,0 +1,13 @@
+services:
+  tracker:
+    build:
+      context: ./tracker
+      dockerfile: Dockerfile
+    container_name: expense_tracker_react
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./tracker:/app
+      - /app/node_modules
+    stdin_open: true
+    tty: true
