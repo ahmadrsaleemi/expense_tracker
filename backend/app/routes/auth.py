@@ -9,19 +9,19 @@ def signup():
     data = request.get_json()
 
     username = data.get("username")
-    fullname = data.get("fullname")
     email = data.get("email")
     password = data.get("password")
 
-    if not username or not email or not password or not fullname:
-        return jsonify({"error": "Missing username, email, password or fullname"}), 400
+    if not username or not email or not password:
+        return jsonify({"error": "Missing username, email or password"}), 400
     
-    user, error = UserService.create_user(username, email, password, fullname)
+    user, error = UserService.create_user(username, email, password)
 
     if error:
         return jsonify({"error": error}), 409
     
     return jsonify({
+        "success" : True,
         "message" : "User created successfully",
         "user" : {
             "username" : user.username,
