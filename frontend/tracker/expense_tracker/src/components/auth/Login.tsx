@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { TextField, Button, Typography, Box, Alert } from "@mui/material";
+import { useAuth } from "../../hooks/useAuth";
 
 interface LoginProps {
   onLoginSuccess: (message: string) => void;
@@ -9,6 +10,8 @@ const Login: React.FC<LoginProps> = ({ onLoginSuccess }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+
+  const { setToken } = useAuth();
 
   const handleSubmit = async () => {
     //now we need to include the api request here
@@ -21,6 +24,8 @@ const Login: React.FC<LoginProps> = ({ onLoginSuccess }) => {
       const data = await response.json();
       if (data.success) {
         //do something here to login user to next page
+        setToken(data.access_token);
+        console.log("token has been found");
       } else {
         setError(data.message);
       }
