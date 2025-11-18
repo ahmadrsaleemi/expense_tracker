@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { TextField, Button, Typography, Box, Alert } from "@mui/material";
 import { useAuth } from "../../hooks/useAuth";
+import { useNavigate } from "react-router-dom";
 
 interface LoginProps {
   onLoginSuccess: (message: string) => void;
@@ -11,6 +12,7 @@ const Login: React.FC<LoginProps> = ({ onLoginSuccess }) => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
+  const navigate = useNavigate();
   const { setToken } = useAuth();
 
   const handleSubmit = async () => {
@@ -25,7 +27,7 @@ const Login: React.FC<LoginProps> = ({ onLoginSuccess }) => {
       if (data.success) {
         //do something here to login user to next page
         setToken(data.access_token);
-        console.log("token has been found");
+        navigate("/dashboard");
       } else {
         setError(data.message);
       }
