@@ -1,12 +1,12 @@
 import React from "react";
 import { useAuth } from "../../hooks/useAuth";
+import DashboardLayout from "../../components/layout/DashboardLayout.tsx";
 
 export default function Dashboard() {
-  const { token } = useAuth();
   return (
-    <div style={{ padding: "20px" }}>
+    <DashboardLayout>
       <h1>Dashboard</h1>
-      <p>Welcome to expense tracker</p>
-    </div>
+      <p>Welcome to your dashboard.</p>
+    </DashboardLayout>
   );
 }
